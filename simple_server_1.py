@@ -16,7 +16,11 @@ def shutdown_server():
 
 
 def main():
+    signal.signal(signal.SIGHUP, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    signal.signal(signal.SIGQUIT, signal_handler)
+
     global my_p2p_server
     my_p2p_server = ServerCore(50082)
     my_p2p_server.start()
