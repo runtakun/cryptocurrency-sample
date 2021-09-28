@@ -1,0 +1,28 @@
+version: "3.8"
+
+networks:
+  fixed_compose_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.254.249.0/24
+
+services:
+  core_node_1:
+    image: python:3.8
+    volumes:
+      - .:/opt
+    command: python /opt/simple_server_1.py
+    networks:
+      fixed_compose_network:
+        ipv4_address: 10.254.249.89
+
+  core_node_2:
+    image: python:3.8
+    volumes:
+      - .:/opt
+    command: python /opt/simple_server_2.py -list 10.254.249.89
+    networks:
+      fixed_compose_network:
+    depends_on:
+      - core_node_1
