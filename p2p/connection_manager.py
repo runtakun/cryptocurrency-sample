@@ -18,6 +18,9 @@ class ConnectionManager:
         self.core_node_set = CoreNodeList()
         self._add_peer((host, my_port))
         self.mm = MessageManager()
+        self.ping_timer = None
+        self.my_c_host = None
+        self.my_c_port = None
 
     def start(self):
         t = threading.Thread(target=self._wait_for_access)
@@ -63,7 +66,8 @@ class ConnectionManager:
         s.close()
         self.ping_timer.cancel()
         msg = self.mm.build(MSG_REMOVE, self.port)
-        self.send_msg((self.my_c_host, self.my_c_port), msg)
+        if self.my_c_host and self.my_c_port:
+            self.send_msg((self.my_c_host, self.my_c_port), msg)
 
     def _wait_for_access(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

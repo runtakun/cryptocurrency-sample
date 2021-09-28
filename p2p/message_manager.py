@@ -45,8 +45,8 @@ class MessageManager:
         content = json.loads(msg)
         msg_ver = StrictVersion(content[self.version])
 
-        cmd = msg[self.msg_type]
-        payload = msg[self.payload]
+        cmd = msg.get(self.msg_type)
+        payload = msg.get(self.payload)
 
         if msg[self.protocol] != PROTOCOL_NAME:
             return 'error', ERR_PROTOCOL_UNMATCH, None, None
