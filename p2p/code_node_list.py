@@ -12,7 +12,7 @@ class CoreNodeList:
         """
         with self.lock:
             print('Adding peer: ', peer)
-            self.list.add((peer))
+            self.list.add(peer)
             print('Current Core list: ', self.list)
 
     def remove(self, peer):
